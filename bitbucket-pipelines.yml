@@ -10,6 +10,6 @@ pipelines:
           clone:
             enabled: false
           script:
-            - git clone --bare git@bitbucket.org/unes-ecommerce/adobe-eds.git
+            - git clone --bare git@bitbucket.org:unes-ecommerce/adobe-eds.git
             - cd bitbucket-repo.git
             - git push --mirror git@github.com:ICTdigitalUnes/UnesCorpAdobeEDS.git
