@@ -1,0 +1,10 @@
+{
+  "mappings": [
+    "/content/unes/:/",
+    "/content/unes/configuration:/.helix/config.json",
+    "/content/unes/metadata:/metadata.json"
+  ],
+  "includes": [
+    "/content/unes/"
+  ]
+}
