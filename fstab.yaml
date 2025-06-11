@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p156659-e1664532.adobeaemcloud.com/bin/franklin.delivery/ICTdigitalUnes/unes-corp-aem/main"
+    url: "https://author-p156659-e1672969.adobeaemcloud.com/bin/franklin.delivery/ICTdigitalUnes/unes-corp-aem/main"
     type: "markup"
     suffix: ".html"
