@@ -1,5 +1,0 @@
-mountpoints:
-  /:
-    url: "https://author-p156659-e1672969.adobeaemcloud.com/bin/franklin.delivery/ICTdigitalUnes/UNESCorpAEMEDS/main"
-    type: "markup"
-    suffix: ".html"
