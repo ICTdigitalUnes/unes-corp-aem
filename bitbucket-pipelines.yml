@@ -12,4 +12,4 @@ pipelines:
           script:
             - git clone --bare git@bitbucket.org:unes-ecommerce/adobe-eds.git
             - cd adobe-eds.git
-            - git push --mirror git@github.com:ICTdigitalUnes/UnesCorpAdobeEDS.git
+            - git push --mirror git@github.com:ICTdigitalUnes/UnesCorpAEMEDS.git
