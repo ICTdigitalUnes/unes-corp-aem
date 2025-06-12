@@ -12,9 +12,7 @@
   margin-bottom: 2rem;
   color: #2a2a2a;
 }
-.test.block .output-jwt,
-.test.block .output-access-token,
-.test.block .output-coupon {
+.test.block .output-block {
   background: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -25,16 +23,12 @@
   flex-wrap: wrap;
   margin: 1.5rem auto;
 }
-.test.block .output-jwt h2,
-.test.block .output-access-token h2,
-.test.block .output-coupon h2 {
+.test.block .output-block h2 {
   font-size: 1.1rem;
   margin: 0 0 0.5rem 0;
   color: #0070f3;
 }
-.test.block .output-jwt p,
-.test.block .output-access-token p,
-.test.block .output-coupon p {
+.test.block .output-block p {
   width: 100%;
   font-family: monospace;
   font-size: 1rem;
@@ -50,6 +44,9 @@
 }
 .test.block .output-coupon {
   border-left: 5px solid #e91e63;
+}
+.test.block .output-orders {
+  border-left: 5px solid #ffff00;
 }
 
 /*# sourceMappingURL=test.css.map */

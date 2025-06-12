@@ -4,7 +4,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 function createOutputBlock(id, title) {
   const div = document.createElement('div');
   div.id = id;
-  div.classList.add(id); // solo la classe specifica
+  div.classList.add('output-block', id); // aggiunta classe generica + specifica
   const h2 = document.createElement('h2');
   h2.textContent = title;
   const p = document.createElement('p');
