@@ -77,7 +77,7 @@ export default function decorate(block) {
         "https://stagingapi-u2spesaonline.unes.it/authorizationserver/oauth/token",
         {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded", "Access-Control-Allow-Origin": "*" },
           body: tokenForm,
         }
       );
