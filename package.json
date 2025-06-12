@@ -15,8 +15,11 @@
     "prepare": "husky",
     "build:scss": "sass blocks/:blocks/",
     "watch:scss": "sass --watch blocks/:blocks/",
-    "css": "npm run build:scss",
-    "css-watch": "npm run watch:scss"
+    "minify:css": "sass --style=compressed blocks/:blocks/",
+    "build dev": "npm run build:scss",
+    "watch": "npm run watch:scss",
+    "build prod": "npm run minify:scss"
+    
   },
   "repository": {
     "type": "git",

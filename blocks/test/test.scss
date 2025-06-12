@@ -30,6 +30,7 @@ $coupon-color: #e91e63;
       box-shadow: 0 1px 4px #0001;
       max-width: 80%;
       display: flex;
+      flex-wrap: wrap;
       margin: 1.5rem auto;
 
       h2 {
@@ -38,6 +39,7 @@ $coupon-color: #e91e63;
         color: #0070f3;
       }
       p {
+        width: 100%;
         font-family: monospace;
         font-size: 1rem;
         color: #333;

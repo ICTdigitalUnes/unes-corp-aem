@@ -22,6 +22,7 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.0666666667);
   max-width: 80%;
   display: flex;
+  flex-wrap: wrap;
   margin: 1.5rem auto;
 }
 .test.block .output-jwt h2,
@@ -34,6 +35,7 @@
 .test.block .output-jwt p,
 .test.block .output-access-token p,
 .test.block .output-coupon p {
+  width: 100%;
   font-family: monospace;
   font-size: 1rem;
   color: #333;
