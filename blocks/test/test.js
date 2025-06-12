@@ -23,10 +23,12 @@ export default function decorate(block) {
     createOutputBlock('output-jwt', 'output JWT:'),
     createOutputBlock('output-access-token', 'output Access Token:'),
     createOutputBlock('output-coupon', 'output Coupon:'),
-    createOutputBlock('output-orders', 'output Orders:')
+    createOutputBlock('output-orders', 'output Orders:'),
+      createOutputBlock('output-tickets', 'output Scontrini:')
+
   );
 
-  // Funzione demo API integrata fe con problema CORS ad ora poi modificare quando pronta la servlet/endpoint
+  // TODO Funzione demo API integrata fe con problema CORS ad ora poi modificare quando pronta la servlet/endpoint
   const runDemoApi = async function runDemoApi() {
     const CDC_API_KEY = "4_VNEH55LEIvCyfNLs0A4P8g";
     const CDC_USER_KEY = "APvwVy2bbm2k";
@@ -42,6 +44,8 @@ export default function decorate(block) {
       token: block.querySelector("#output-access-token p"),
       coupon: block.querySelector("#output-coupon p"),
       orders: block.querySelector("#output-orders p"),
+      tickets: block.querySelector("#output-tickets p"),
+
     };
 
     try {
@@ -116,11 +120,26 @@ export default function decorate(block) {
       );
       const ordersData = await ordersRes.json();
       output.orders.textContent = JSON.stringify(ordersData, null, 2);
+
+      // Step 5: get tickets
+      const ticketsRes = await fetch(
+        "https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/users/current/tickets",
+        {
+          headers: {
+            Authorization: `Bearer ${tokenData.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      );
+      const ticketsData = await ticketsRes.json();
+      output.tickets.textContent = JSON.stringify(ticketsData, null, 2);
+
     } catch (err) {
       output.jwt.textContent = "";
       output.token.textContent = "";
       output.coupon.textContent = "";
       output.orders.textContent = "";
+      output.tickets.textContent = "";
       output.jwt.insertAdjacentHTML(
         "afterend",
         `<span style='color:red'>Errore: ${err.message}</span>`
