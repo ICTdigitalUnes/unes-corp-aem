@@ -27,6 +27,8 @@ export default function decorate(block) {
 
   // Funzione demo API integrata
   const runDemoApi = async function runDemoApi() {
+    // Proxy temporaneo solo per sviluppo/test (NON usare in produzione)
+    const corsProxy = "https://corsproxy.io/?";
     const CDC_API_KEY = "4_VNEH55LEIvCyfNLs0A4P8g";
     const CDC_USER_KEY = "APvwVy2bbm2k";
     const CDC_SECRET = "2lXdEZ+qQsZxnpPCukUMLMeZQQzas5j0";
@@ -51,7 +53,7 @@ export default function decorate(block) {
       jwtForm.append("targetUID", CDC_UID);
       jwtForm.append("expiration", "3600");
 
-      const jwtRes = await fetch("https://accounts.eu1.gigya.com/accounts.getJWT", {
+      const jwtRes = await fetch(`${corsProxy}https://accounts.eu1.gigya.com/accounts.getJWT`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: jwtForm,
@@ -74,7 +76,7 @@ export default function decorate(block) {
       tokenForm.append("currency", "EUR");
 
       const tokenRes = await fetch(
-        "https://stagingapi-u2spesaonline.unes.it/authorizationserver/oauth/token",
+        `${corsProxy}https://stagingapi-u2spesaonline.unes.it/authorizationserver/oauth/token`,
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -88,7 +90,7 @@ export default function decorate(block) {
 
       // Step 3: get coupons
       const couponRes = await fetch(
-        "https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/users/current/coupons?filtered=false",
+        `${corsProxy}https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/users/current/coupons?filtered=false`,
         {
           headers: {
             Authorization: `Bearer ${tokenData.access_token}`,
