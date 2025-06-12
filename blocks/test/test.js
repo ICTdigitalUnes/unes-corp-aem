@@ -6,24 +6,34 @@ export default function decorate(block) {
   block.textContent = '';
 
   // Titolo principale
-  const title = document.createElement('h2');
-  title.textContent = 'Test Block';
-  block.append(title);
+  const mainTitle = document.createElement('h1');
+  mainTitle.textContent = 'Demo chiamata API (mock)';
+  block.append(mainTitle);
 
-  // Crea 3 div con titolo e contenitore vuoto
-  for (let i = 1; i <= 3; i++) {
-    const wrapper = document.createElement('div');
-    wrapper.className = `test-section test-section-${i}`;
+  // Output JWT
+  const jwtDiv = document.createElement('div');
+  jwtDiv.id = 'output-jwt';
+  const jwtTitle = document.createElement('h2');
+  jwtTitle.textContent = 'output JWT:';
+  const jwtP = document.createElement('p');
+  jwtDiv.append(jwtTitle, jwtP);
+  block.append(jwtDiv);
 
-    const sectionTitle = document.createElement('h3');
-    sectionTitle.textContent = `Test ${i}`;
-    wrapper.append(sectionTitle);
+  // Output Access Token
+  const accessDiv = document.createElement('div');
+  accessDiv.id = 'output-access-token';
+  const accessTitle = document.createElement('h2');
+  accessTitle.textContent = 'output Access Token:';
+  const accessP = document.createElement('p');
+  accessDiv.append(accessTitle, accessP);
+  block.append(accessDiv);
 
-    const emptyDiv = document.createElement('div');
-    emptyDiv.className = 'test-content';
-    // Qui potrai iniettare contenuto in futuro
-    wrapper.append(emptyDiv);
-
-    block.append(wrapper);
-  }
+  // Output Coupon
+  const couponDiv = document.createElement('div');
+  couponDiv.id = 'output-coupon';
+  const couponTitle = document.createElement('h2');
+  couponTitle.textContent = 'output Coupon:';
+  const couponP = document.createElement('p');
+  couponDiv.append(couponTitle, couponP);
+  block.append(couponDiv);
 }
