@@ -53,7 +53,7 @@ export default function decorate(block) {
 
       const jwtRes = await fetch("https://accounts.eu1.gigya.com/accounts.getJWT", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: { "Content-Type": "application/x-www-form-urlencoded", "Access-Control-Allow-Origin": "*" },
         body: jwtForm,
       });
       const jwtData = await jwtRes.json();
