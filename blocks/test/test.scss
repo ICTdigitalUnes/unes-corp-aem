@@ -1,0 +1,53 @@
+$main-bg: #f8f9fa;
+$block-radius: 12px;
+$jwt-color: #ff9800;
+$access-color: #4caf50;
+$coupon-color: #e91e63;
+
+.test {
+  &.block {
+    padding: 2rem 1rem;
+    background: $main-bg;
+    border-radius: $block-radius;
+    box-shadow: 0 2px 8px #0001;
+    max-width: 600px;
+    margin: 22rem auto;
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #2a2a2a;
+    }
+
+    .output-jwt,
+    .output-access-token,
+    .output-coupon {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.2rem 1rem;
+      box-shadow: 0 1px 4px #0001;
+      max-width: 80%;
+      display: flex;
+      margin: 1.5rem auto;
+
+      h2 {
+        font-size: 1.1rem;
+        margin: 0 0 0.5rem 0;
+        color: #0070f3;
+      }
+      p {
+        font-family: monospace;
+        font-size: 1rem;
+        color: #333;
+        word-break: break-all;
+        margin: 0;
+      }
+    }
+
+    .output-jwt { border-left: 5px solid $jwt-color; }
+    .output-access-token { border-left: 5px solid $access-color; }
+    .output-coupon { border-left: 5px solid $coupon-color; }
+  }
+}
