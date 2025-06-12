@@ -1,11 +1,10 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-function createOutputBlock(id, title, classes = []) {
+function createOutputBlock(id, title) {
   const div = document.createElement('div');
   div.id = id;
-  // Aggiungi sempre 'output-block' e l'id come classi, più eventuali altre classi passate
-  div.classList.add('output-block', id, ...classes);
+  div.classList.add(id); // solo la classe specifica
   const h2 = document.createElement('h2');
   h2.textContent = title;
   const p = document.createElement('p');
@@ -21,8 +20,8 @@ export default function decorate(block) {
   block.append(mainTitle);
 
   block.append(
-    createOutputBlock('output-jwt', 'output JWT:', ['jwt-section']),
-    createOutputBlock('output-access-token', 'output Access Token:', ['access-token-section']),
-    createOutputBlock('output-coupon', 'output Coupon:', ['coupon-section'])
+    createOutputBlock('output-jwt', 'output JWT:'),
+    createOutputBlock('output-access-token', 'output Access Token:'),
+    createOutputBlock('output-coupon', 'output Coupon:')
   );
 }
