@@ -1,11 +1,11 @@
 $main-bg: #f8f9fa;
 $block-radius: 12px;
-$jwt-color: #ff9800;
-$access-color: #4caf50;
-$coupon-color: #e91e63;
-$orders-color: #ffff00;
-$tickets-color: #2196f3;
-$general-color: #6de771;
+$orange: #ff9800;
+$green: #4caf50;
+$red: #e91e63;
+$yellow-light: #ffff00;
+$blue: #2196f3;
+$green-light: #6de771;
 
 .test {
   &.block {
@@ -33,23 +33,11 @@ $general-color: #6de771;
       display: flex;
       flex-wrap: wrap;
       margin: 1.5rem auto;
-      border-left: 5px solid $general-color;
+      border-left: 5px solid $green-light;
 
-      // &.output-jwt {
-      //   border-left: 5px solid $jwt-color;
-      // }
-      // &.output-access-token {
-      //   border-left: 5px solid $access-color;
-      // }
-      // &.output-coupon {
-      //   border-left: 5px solid $coupon-color;
-      // }
-      // &.output-orders {
-      //   border-left: 5px solid $tickets-color;
-      // }
-      //&.output-orders {
-      //   border-left: 5px solid $orders-color;
-      // }
+      &.output-jwt {
+        border-left: 5px solid $orange;
+      }
 
       h2 {
         font-size: 1.1rem;

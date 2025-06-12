@@ -24,6 +24,9 @@
   margin: 1.5rem auto;
   border-left: 5px solid #6de771;
 }
+.test.block .output-block.output-jwt {
+  border-left: 5px solid #ff9800;
+}
 .test.block .output-block h2 {
   font-size: 1.1rem;
   margin: 0 0 0.5rem 0;

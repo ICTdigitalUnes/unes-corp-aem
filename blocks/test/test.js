@@ -1,31 +1,31 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from "../../scripts/aem.js";
+import { moveInstrumentation } from "../../scripts/scripts.js";
 
 function createOutputBlock(id, title) {
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.id = id;
-  div.classList.add('output-block', id); // aggiunta classe generica + specifica
-  const h2 = document.createElement('h2');
+  div.classList.add("output-block", id); // aggiunta classe generica + specifica
+  const h2 = document.createElement("h2");
   h2.textContent = title;
-  const p = document.createElement('p');
+  const p = document.createElement("p");
   div.append(h2, p);
   return div;
 }
 
 export default function decorate(block) {
-  block.textContent = '';
+  block.textContent = "";
 
-  const mainTitle = document.createElement('h1');
-  mainTitle.textContent = 'Demo chiamata API (mock)';
+  const mainTitle = document.createElement("h1");
+  mainTitle.textContent = "Demo chiamata API (mock)";
   block.append(mainTitle);
 
   block.append(
-    createOutputBlock('output-jwt', 'output JWT:'),
-    createOutputBlock('output-access-token', 'output Access Token:'),
-    createOutputBlock('output-coupon', 'output Coupon:'),
-    createOutputBlock('output-orders', 'output Orders:'),
-      createOutputBlock('output-tickets', 'output Scontrini:')
-
+    createOutputBlock("output-jwt", "output JWT:"),
+    createOutputBlock("output-access-token", "output Access Token:"),
+    createOutputBlock("output-coupon", "output Coupon:"),
+    createOutputBlock("output-orders", "output Orders:"),
+    createOutputBlock("output-tickets", "output Scontrini:"),
+    createOutputBlock("output-wishlist", "output Wishlist:")
   );
 
   // TODO Funzione demo API integrata fe con problema CORS ad ora poi modificare quando pronta la servlet/endpoint
@@ -45,7 +45,7 @@ export default function decorate(block) {
       coupon: block.querySelector("#output-coupon p"),
       orders: block.querySelector("#output-orders p"),
       tickets: block.querySelector("#output-tickets p"),
-
+      wishlist: block.querySelector("#output-wishlist p"),
     };
 
     try {
@@ -60,11 +60,14 @@ export default function decorate(block) {
       //TODO Quando sarà pronta la servlet/endpoint, modificare il path
       //const jwtRes = await fetch("/bin/gigya/jwt", { method: "POST", body: jwtForm });
 
-      const jwtRes = await fetch("https://accounts.eu1.gigya.com/accounts.getJWT", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded"},
-        body: jwtForm,
-      });
+      const jwtRes = await fetch(
+        "https://accounts.eu1.gigya.com/accounts.getJWT",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: jwtForm,
+        }
+      );
       const jwtData = await jwtRes.json();
 
       if (!jwtData.id_token) throw new Error("JWT non ricevuto");
@@ -108,7 +111,7 @@ export default function decorate(block) {
       const couponData = await couponRes.json();
       output.coupon.textContent = JSON.stringify(couponData, null, 2);
 
-      // Step 4: Check Order
+      // Step 4: Recupero ordini utente (lista ordini)
       const ordersRes = await fetch(
         "https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/users/current/orders",
         {
@@ -121,9 +124,9 @@ export default function decorate(block) {
       const ordersData = await ordersRes.json();
       output.orders.textContent = JSON.stringify(ordersData, null, 2);
 
-      // Step 5: get tickets
+      // Step 5: Recupero lista scontrini digitali per utente (master)
       const ticketsRes = await fetch(
-        "https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/users/current/tickets",
+        `https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/users/${CDC_UID}/tickets`,
         {
           headers: {
             Authorization: `Bearer ${tokenData.access_token}`,
@@ -133,13 +136,81 @@ export default function decorate(block) {
       );
       const ticketsData = await ticketsRes.json();
       output.tickets.textContent = JSON.stringify(ticketsData, null, 2);
+      // Se la risposta non contiene la chiave "tickets", mostra warning
+      let firstTicketCode = null;
+      if (!("tickets" in ticketsData)) {
+        output.tickets.insertAdjacentHTML(
+          "beforeend",
+          '<br><span style="color: #e91e63">Risposta inattesa dall’API: chiave tickets mancante.</span>'
+        );
+      } else if (
+        Array.isArray(ticketsData.tickets) &&
+        ticketsData.tickets.length === 0
+      ) {
+        // Se la lista è vuota, mostra messaggio dedicato
+        output.tickets.insertAdjacentHTML(
+          "beforeend",
+          '<br><span style="color: #888">Nessuno scontrino trovato.</span>'
+        );
+      } else if (
+        Array.isArray(ticketsData.tickets) &&
+        ticketsData.tickets.length > 0
+      ) {
+        // Se ci sono scontrini, salva il code del primo per la chiamata di dettaglio
+        firstTicketCode = ticketsData.tickets[0].code;
+      }
 
+      // Step 5b: Recupero dettaglio scontrino (detail) solo se esiste almeno uno scontrino
+      if (firstTicketCode) {
+        // Crea dinamicamente il blocco di output per il dettaglio se non esiste già
+        if (!block.querySelector("#output-ticket-detail")) {
+          block.append(
+            createOutputBlock(
+              "output-ticket-detail",
+              "output Dettaglio Scontrino:"
+            )
+          );
+        }
+        const outputTicketDetail = block.querySelector(
+          "#output-ticket-detail p"
+        );
+        // Chiamata API per dettaglio scontrino usando il code del primo scontrino trovato
+        const ticketDetailRes = await fetch(
+          `https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/users/${CDC_UID}/tickets/${firstTicketCode}`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenData.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        );
+        const ticketDetailData = await ticketDetailRes.json();
+        outputTicketDetail.textContent = JSON.stringify(
+          ticketDetailData,
+          null,
+          2
+        );
+      }
+
+      // Step 6: get wishlist
+      const wishlistRes = await fetch(
+        `https://stagingapi-u2spesaonline.unes.it/rest/v2/u2/wishlist/allwishlists?fields=FULL&orderedBy=DEFAULT&fullMode=true`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenData.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      );
+      const wishlistData = await wishlistRes.json();
+      output.wishlist.textContent = JSON.stringify(wishlistData, null, 2);
     } catch (err) {
       output.jwt.textContent = "";
       output.token.textContent = "";
       output.coupon.textContent = "";
       output.orders.textContent = "";
       output.tickets.textContent = "";
+      output.wishlist.textContent = "";
       output.jwt.insertAdjacentHTML(
         "afterend",
         `<span style='color:red'>Errore: ${err.message}</span>`
